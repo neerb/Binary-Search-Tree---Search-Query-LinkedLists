@@ -1,0 +1,27 @@
+package mapBinary;
+
+public class TesterProgram
+{
+    public static void main(String[] args)
+    {
+	TreeMapPT tester = new TreeMapPT();
+
+	// Inserting roots and leaf nodes of binary tree
+	for (int i = 0; i < 100; i++)
+	    tester.put(i);
+
+	// Will print newly created binary search tree
+	tester.print();
+
+	// Gets value from key 10
+	tester.get(10);
+
+	// Removes nodes with keys 10, 25, and 76 from the tree
+	tester.removeKey(10);
+	tester.removeKey(25);
+	tester.removeKey(76);
+
+	// Prints tree after removal of nodes with keys above
+	tester.print();
+    }
+}
