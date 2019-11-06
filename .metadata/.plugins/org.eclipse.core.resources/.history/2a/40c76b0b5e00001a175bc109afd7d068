@@ -1,0 +1,30 @@
+package BST;
+
+public class MapEntryPT implements Comparable<MapEntryPT>
+{
+	String key;
+	List value;
+	MapEntryPT left, right;
+
+	public MapEntryPT(int k, String v)
+	{
+		this.key = k;
+		this.value = v;
+
+		left = right = null;
+	}
+
+	public MapEntryPT(int k)
+	{
+		this.key = k;
+	}
+
+	@Override
+	public int compareTo(MapEntryPT o)
+	{
+		if (o.key == this.key)
+			return 1;
+		else
+			return 0;
+	}
+}
