@@ -10,6 +10,7 @@ public class TesterProgram
 		tree.put(5, "Five");
 
 		tree.put(10, "Ten");
+		tree.put(10, "Ten");
 		
 		tree.put(30, "Thirty");
 		
