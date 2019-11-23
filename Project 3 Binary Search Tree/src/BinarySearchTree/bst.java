@@ -4,7 +4,7 @@ class bst
 {
 	Node root;
 
-	private class Node
+	public class Node
 	{
 		// These attributes of the Node class will not be sufficient for those
 		// attempting the AVL extra credit.
@@ -22,16 +22,24 @@ class bst
 			this.keyword = k;
 		}
 
-		private void update(Record r)
+		public void update(Record r)
 		{
 			// TODO Adds the Record r to the linked list of records. You do not have to
 			// check if the record is already in the list.
 			// HINT: Add the Record r to the front of your linked list.
-			Record temp = record;
-			
-			record = record.next;
-			
-			record = r;
+					
+			if(record == null)
+			{
+				record = r;
+			}
+			else
+			{
+				Record temp = record.next;
+				
+				record = r;
+				
+				record.next = temp;
+			}
 		}
 	}
 
@@ -47,12 +55,39 @@ class bst
 		// for the node associated
 		// with keyword. If there is no node, this code should add the node.
 		
-		
 		if(root == null)
 		{
 			root = new Node(keyword);
 			root.record = recordToAdd;
 		}
+		else
+		{
+			insert(keyword, fd, root);
+		}
+	}
+	
+	private Node insert(String keyword, FileData fd, Node currentNode)
+	{
+		if(currentNode == null)
+		{
+			Node newNode = new Node(keyword);
+			Record newRecord = new Record(fd.id, fd.title, fd.author, null);
+			newNode.update(newRecord);
+			currentNode = newNode;
+			
+			return currentNode;
+		}
+		
+		if(currentNode.keyword.compareTo(keyword) > 0)
+		{
+			insert(keyword, fd, currentNode.r);
+		}
+		else if(currentNode.keyword.compareTo(keyword) < 0)
+		{
+			insert(keyword, fd, currentNode.l);
+		}
+		
+		return currentNode;
 	}
 
 	public boolean contains(String keyword)
@@ -98,7 +133,7 @@ class bst
 			
 			while (r != null)
 			{
-				System.out.printf("\t%s\n", r.title);
+				System.out.printf("\t%s - %s\n", r.title, r.author);
 				r = r.next;
 			}
 			print(t.r);

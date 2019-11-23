@@ -152,19 +152,33 @@ class test
 		test T = new test("datafile.txt"); // THIS WILL CREATE YOUR BST AND FILL IT WITH THE INFORMATION FROM THE
 											// DATAFILE
 
+		bst bstTest = new bst();
+		
+		FileData testData = new FileData(1234, "A brief history of time", "Stephen Hawking", 1);
+		FileData testData2 = new FileData(5555, "Meow", "John", 1);
+		FileData testData3 = new FileData(7777, "The Bible", "Jesus", 1);
+
+		bstTest.insert("Book1", testData);
+		bstTest.insert("Book2", testData2);
+		bstTest.insert("Book3", testData3);
+
+		bstTest.print();
+		
 		/*
 		 * This line of code should return the first record in the linked list for a
 		 * given keyword. It may be useful for your personal debugging
 		 */
-		T.a.get_records("medical" /* Insert keyword to be found here. "medical" is an example */).print();
+		
+		//T.a.get_records("medical" /* Insert keyword to be found here. "medical" is an example */).print();
 
+		/*
 		T.a.print(); // Prints titles of all elements in the bst sorted by keyword.
-
 		T.a.delete("medical");
 		T.a.delete("learning");
 		T.a.delete("concepts");
 
 		T.a.print(); // Prints bst after the 3 deletions
+		*/
 		// THIS AREA IS FOR YOUR USE TO HELP TEST THAT YOUR BST WORKS
 	}
 }
