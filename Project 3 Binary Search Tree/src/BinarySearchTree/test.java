@@ -148,10 +148,11 @@ class test
 
 	public static void main(String[] args)
 	{
-
 		test T = new test("datafile.txt"); // THIS WILL CREATE YOUR BST AND FILL IT WITH THE INFORMATION FROM THE
 											// DATAFILE
 
+		T.a.print();
+		
 		bst bstTest = new bst();
 		
 		FileData testData = new FileData(1234, "A brief history of time", "Stephen Hawking", 1);
@@ -159,10 +160,10 @@ class test
 		FileData testData3 = new FileData(7777, "The Bible", "Jesus", 1);
 
 		bstTest.insert("Book1", testData);
-		bstTest.insert("Book2", testData2);
+		bstTest.insert("Book1", testData2);
 		bstTest.insert("Book3", testData3);
 
-		bstTest.print();
+		//bstTest.print();
 		
 		/*
 		 * This line of code should return the first record in the linked list for a

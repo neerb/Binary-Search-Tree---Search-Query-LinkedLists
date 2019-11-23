@@ -34,7 +34,7 @@ class bst
 			}
 			else
 			{
-				Record temp = record.next;
+				Record temp = record;
 				
 				record = r;
 				
@@ -68,10 +68,11 @@ class bst
 	
 	private Node insert(String keyword, FileData fd, Node currentNode)
 	{
+		Node newNode = new Node(keyword);
+		Record newRecord = new Record(fd.id, fd.title, fd.author, null);
+		
 		if(currentNode == null)
 		{
-			Node newNode = new Node(keyword);
-			Record newRecord = new Record(fd.id, fd.title, fd.author, null);
 			newNode.update(newRecord);
 			currentNode = newNode;
 			
@@ -80,12 +81,14 @@ class bst
 		
 		if(currentNode.keyword.compareTo(keyword) > 0)
 		{
-			insert(keyword, fd, currentNode.r);
+			currentNode.r = insert(keyword, fd, currentNode.r);
 		}
 		else if(currentNode.keyword.compareTo(keyword) < 0)
 		{
-			insert(keyword, fd, currentNode.l);
+			currentNode.l = insert(keyword, fd, currentNode.l);
 		}
+		else
+			currentNode.update(newRecord);
 		
 		return currentNode;
 	}
@@ -102,10 +105,6 @@ class bst
 		// TODO Returns the first record for a particular keyword. This record will link
 		// to other records
 		// If the keyword is not in the bst, it should return null.
-		if(contains(keyword))
-		{
-			
-		}
 		
 		return null;
 	}
@@ -136,7 +135,12 @@ class bst
 				System.out.printf("\t%s - %s\n", r.title, r.author);
 				r = r.next;
 			}
+			
 			print(t.r);
+		}
+		else
+		{
+			//System.out.print("Node is null");
 		}
 	}
 }
