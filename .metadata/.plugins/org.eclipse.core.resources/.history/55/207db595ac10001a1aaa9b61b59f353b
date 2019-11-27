@@ -51,7 +51,7 @@ class bst
 	public void insert(String keyword, FileData fd)
 	{
 		Record recordToAdd = new Record(fd.id, fd.author, fd.title, null);
-		// Write a recursive insertion that adds recordToAdd to the list of records
+		// TODO Write a recursive insertion that adds recordToAdd to the list of records
 		// for the node associated
 		// with keyword. If there is no node, this code should add the node.
 		
@@ -99,32 +99,12 @@ class bst
 		// exists in the bst
 		
 		
-		return contains_record(keyword, root);
-	}
-	
-	private boolean contains_record(String keyword, Node currentNode)
-	{
-		if(currentNode.keyword.compareTo(keyword) > 0 && currentNode.r != null)
-		{
-			return contains_record(keyword, currentNode.r);
-		}
-		else if(currentNode.keyword.compareTo(keyword) < 0 && currentNode.l != null)
-		{
-			return contains_record(keyword, currentNode.l);
-		}
-		else if(currentNode.keyword.equals(keyword))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return false;
 	}
 
 	public Record get_records(String keyword)
 	{
-		// Returns the first record for a particular keyword. This record will link
+		// TODO Returns the first record for a particular keyword. This record will link
 		// to other records
 		// If the keyword is not in the bst, it should return null.
 		
@@ -133,22 +113,16 @@ class bst
 	
 	private Record find_record(String keyword, Node currentNode)
 	{
-		if(currentNode.keyword.compareTo(keyword) > 0 && currentNode.r != null)
+		if(currentNode.keyword.compareTo(keyword) > 0)
 		{
 			return find_record(keyword, currentNode.r);
 		}
-		else if(currentNode.keyword.compareTo(keyword) < 0 && currentNode.l != null)
+		else if(currentNode.keyword.compareTo(keyword) < 0)
 		{
 			return find_record(keyword, currentNode.l);
 		}
-		else if(currentNode.keyword.equals(keyword))
-		{
-			return currentNode.record;
-		}
-		else
-		{
-			return null;
-		}
+		
+		return currentNode.record;
 	}
 
 	public void delete(String keyword)

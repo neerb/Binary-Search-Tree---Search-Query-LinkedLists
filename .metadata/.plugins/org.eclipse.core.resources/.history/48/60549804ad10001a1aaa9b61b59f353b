@@ -145,22 +145,6 @@ class test
 		}
 
 	}
-	
-	public static void printRecord(Record r)
-	{
-		if(r == null)
-		{
-			System.out.println("Nothing was found with that keyword.");
-		}
-		
-		Record next = r;
-		
-		while(next != null)
-		{
-			System.out.println(next.title + " - " + next.author);
-			next = next.next;
-		}
-	}
 
 	public static void main(String[] args)
 	{
@@ -179,9 +163,7 @@ class test
 		bstTest.insert("Book1", testData2);
 		bstTest.insert("Book3", testData3);
 		
-		T.printRecord(T.a.get_records("blobs"));
-		
-		System.out.println(T.a.contains("blobs"));
+		bstTest.get_records("database");
 
 		//bstTest.print();
 		

@@ -179,9 +179,9 @@ class test
 		bstTest.insert("Book1", testData2);
 		bstTest.insert("Book3", testData3);
 		
-		T.printRecord(T.a.get_records("blobs"));
+		T.printRecord(T.a.get_records("database"));
 		
-		System.out.println(T.a.contains("blobs"));
+		System.out.println(T.a.contains("database"));
 
 		//bstTest.print();
 		
