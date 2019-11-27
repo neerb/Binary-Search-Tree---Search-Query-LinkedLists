@@ -95,8 +95,9 @@ class bst
 
 	public boolean contains(String keyword)
 	{
-		// Write a recursive function which returns true if a particular keyword
+		// TODO Write a recursive function which returns true if a particular keyword
 		// exists in the bst
+		
 		
 		return contains_record(keyword, root);
 	}
