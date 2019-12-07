@@ -1,6 +1,5 @@
 package BinarySearchTree;
 
-import java.util.Scanner;
 import java.io.*;
 
 class FileData
@@ -146,6 +145,7 @@ class test
 
 	}
 	
+	// This method prints all the records in the list of records passed into the parameter
 	public static void printRecord(Record r)
 	{
 		if(r == null)
@@ -155,51 +155,71 @@ class test
 		
 		Record next = r;
 		
+		System.out.println("List of records found with searched keyword: ");
+		
 		while(next != null)
 		{
-			System.out.println(next.title + " - " + next.author);
+			System.out.println("\t" + next.title + " - " + next.author);
 			next = next.next;
 		}
 	}
 
 	public static void main(String[] args)
 	{
+		/// Testing file BST
+		
 		test T = new test("datafile.txt"); // THIS WILL CREATE YOUR BST AND FILL IT WITH THE INFORMATION FROM THE
 											// DATAFILE
-
 		T.a.print();
-		
-		bst bstTest = new bst();
-		
-		FileData testData = new FileData(1234, "A brief history of time", "Stephen Hawking", 1);
-		FileData testData2 = new FileData(5555, "Meow", "John", 1);
-		FileData testData3 = new FileData(7777, "The Bible", "Jesus", 1);
+				
+		T.a.get_records("database").print();
 
-		bstTest.insert("Book1", testData);
-		bstTest.insert("Book1", testData2);
-		bstTest.insert("Book3", testData3);
-		
-		T.printRecord(T.a.get_records("blobs"));
-		
-		System.out.println(T.a.contains("blobs"));
-
-		//bstTest.print();
-		
-		/*
-		 * This line of code should return the first record in the linked list for a
-		 * given keyword. It may be useful for your personal debugging
-		 */
-		
-		//T.a.get_records("medical" /* Insert keyword to be found here. "medical" is an example */).print();
-
-		/*
 		T.a.print(); // Prints titles of all elements in the bst sorted by keyword.
 		T.a.delete("medical");
 		T.a.delete("learning");
 		T.a.delete("concepts");
 
 		T.a.print(); // Prints bst after the 3 deletions
-		*/
-		// THIS AREA IS FOR YOUR USE TO HELP TEST THAT YOUR BST WORKS
+		///
+		
+		System.out.println("\n--- TESTING FOR SELF-MADE BST BELOW ---\n");
+		
+		/// Testing self-made BST
+		bst bstTest = new bst();
+		
+		/// Attempt to delete from empty tree
+		bstTest.delete("fiction");
+		
+		// Create and insert test data into tree
+		FileData scienceData1 = new FileData(3632, "A brief history of time", "Stephen Hawking", 1);
+		FileData scienceData2 = new FileData(5402, "Reality Is Not What It Seems", "Carlo Rovelli", 1);
+		FileData scienceData3 = new FileData(42, "The Hitchhiker's Guide to the Galaxy", "Douglas Adams", 1);
+
+		FileData philosophyData = new FileData(5555, "Aristotle's Metaphysics", "Aristotle", 1);
+		
+		FileData religiousData = new FileData(7777, "The Bible", "Moses", 1);
+
+		bstTest.insert("science", scienceData1);
+		bstTest.insert("science", scienceData2);
+		bstTest.insert("science", scienceData3);
+
+		bstTest.insert("philosophy", philosophyData);
+		
+		bstTest.insert("religious", religiousData);
+		
+		bstTest.print();
+		
+		// Delete "religious" keyword
+		bstTest.delete("religious");
+		
+		// Check if keywords exist
+		System.out.println("Does this tree contain the keyword \"science\"?" + (bstTest.contains("science") == true ? " Yes, it does!" : " No, it does not."));
+		System.out.println("Does this tree contain the keyword \"fiction\"?" + (bstTest.contains("fiction") == true ? " Yes, it does!" : " No, it does not."));
+
+		// Print BST
+		bstTest.print();
+		
+		// Print searched node list
+		printRecord(bstTest.get_records("science"));
 	}
 }

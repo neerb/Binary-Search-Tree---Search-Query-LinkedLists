@@ -20,4 +20,10 @@ public class Record
 		System.out.println(this.title);
 		System.out.println(this.author);
 	}
+	
+	// Overridden .equals method for a record already containing a matching record.
+	boolean equals(Record r)
+	{
+		return this.title == r.title && this.author == r.author && this.id == r.id;
+	}
 }

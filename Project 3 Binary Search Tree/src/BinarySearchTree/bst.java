@@ -18,28 +18,60 @@ class bst
 
 		private Node(String k)
 		{
-			// TODO Instantialize a new Node with keyword k.
+			// Instantialize a new Node with keyword k.
 			this.keyword = k;
+			l = null;
+			r = null;
 		}
 
 		public void update(Record r)
 		{
-			// TODO Adds the Record r to the linked list of records. You do not have to
-			// check if the record is already in the list.
+			// Adds the Record r to the linked list of records. You do not have to
+			// check if the record is already in the list (I figured I'd do it anyways).
 			// HINT: Add the Record r to the front of your linked list.
-					
+								
 			if(record == null)
 			{
 				record = r;
+				record.next = null;
 			}
 			else
 			{
-				Record temp = record;
-				
-				record = r;
-				
-				record.next = temp;
+				// If the record already exists in the node, do not add it to the list
+				// (I know this wasn't required but I wanted to do it anyways, I hope that's okay)
+				if(!containsRecord(record, r))
+				{					
+					Record temp = record;
+					
+					record = r;
+					
+					record.next = temp;
+				}
+				else
+				{
+					System.out.println("Error: cannot add already existing record.");
+				}
 			}
+		}
+		
+		// Checks record list to see if the inserting record is already in the list
+		boolean containsRecord(Record list, Record newRecord)
+		{
+			Record current = list;
+			
+			while(current != null)
+			{
+				if(current.equals(newRecord))
+				{
+					return true;
+				}
+				else
+				{
+					current = current.next;
+				}
+			}
+			
+			return false;
 		}
 	}
 
@@ -66,6 +98,7 @@ class bst
 		}
 	}
 	
+	// Recursive method to insert a new keyword/node into the BST
 	private Node insert(String keyword, FileData fd, Node currentNode)
 	{
 		Node newNode = new Node(keyword);
@@ -79,14 +112,17 @@ class bst
 			return currentNode;
 		}
 		
+		// If the keyword is less than the current node, traverse to the left
 		if(currentNode.keyword.compareTo(keyword) > 0)
-		{
-			currentNode.r = insert(keyword, fd, currentNode.r);
-		}
-		else if(currentNode.keyword.compareTo(keyword) < 0)
 		{
 			currentNode.l = insert(keyword, fd, currentNode.l);
 		}
+		// If the keyword is greater than the currentNode, traverse to the right
+		else if(currentNode.keyword.compareTo(keyword) < 0)
+		{
+			currentNode.r = insert(keyword, fd, currentNode.r);
+		}
+		// When the correct position is found, update the LinkedList of records
 		else
 			currentNode.update(newRecord);
 		
@@ -98,18 +134,19 @@ class bst
 		// Write a recursive function which returns true if a particular keyword
 		// exists in the bst
 		
-		return contains_record(keyword, root);
+		return contains_node(keyword, root);
 	}
 	
-	private boolean contains_record(String keyword, Node currentNode)
+	// Recursive method that returns true if the specified node exists in the tree, false otherwise
+	private boolean contains_node(String keyword, Node currentNode)
 	{
-		if(currentNode.keyword.compareTo(keyword) > 0 && currentNode.r != null)
+		if(currentNode.keyword.compareTo(keyword) > 0 && currentNode.l != null)
 		{
-			return contains_record(keyword, currentNode.r);
+			return contains_node(keyword, currentNode.l);
 		}
-		else if(currentNode.keyword.compareTo(keyword) < 0 && currentNode.l != null)
+		else if(currentNode.keyword.compareTo(keyword) < 0 && currentNode.r != null)
 		{
-			return contains_record(keyword, currentNode.l);
+			return contains_node(keyword, currentNode.r);
 		}
 		else if(currentNode.keyword.equals(keyword))
 		{
@@ -130,19 +167,27 @@ class bst
 		return find_record(keyword, root);
 	}
 	
+	// Recursive method to find and return record
 	private Record find_record(String keyword, Node currentNode)
 	{
-		if(currentNode.keyword.compareTo(keyword) > 0 && currentNode.r != null)
+		if(currentNode != null)
 		{
-			return find_record(keyword, currentNode.r);
-		}
-		else if(currentNode.keyword.compareTo(keyword) < 0 && currentNode.l != null)
-		{
-			return find_record(keyword, currentNode.l);
-		}
-		else if(currentNode.keyword.equals(keyword))
-		{
-			return currentNode.record;
+			if(currentNode.keyword.compareTo(keyword) > 0 && currentNode.l != null)
+			{
+				return find_record(keyword, currentNode.l);
+			}
+			else if(currentNode.keyword.compareTo(keyword) < 0 && currentNode.r != null)
+			{
+				return find_record(keyword, currentNode.r);
+			}
+			else if(currentNode.keyword.equals(keyword))
+			{
+				return currentNode.record;
+			}
+			else
+			{
+				return null;
+			}
 		}
 		else
 		{
@@ -152,10 +197,68 @@ class bst
 
 	public void delete(String keyword)
 	{
-		// TODO Write a recursive function which removes the Node with keyword from the
+		// Write a recursive function which removes the Node with keyword from the
 		// binary search tree.
 		// You may not use lazy deletion and if the keyword is not in the bst, the
 		// function should do nothing.
+				
+		if(find_record(keyword, root) != null)
+		{
+			root = delete(keyword, root);
+			System.out.println("Node with keyword \"" + keyword + "\" deleted.");
+		}
+		else
+		{
+			System.out.println("Error: attempted to delete a node that does not exist in the tree.");
+		}
+	}
+	
+	// Recursive method to delete node with specified keyword
+	private Node delete(String keyword, Node currentNode)
+	{	
+		// Base case for empty tree
+		if(currentNode == null)
+			return currentNode;
+		
+		if(currentNode.keyword.compareTo(keyword) > 0)
+		{
+			currentNode.l = delete(keyword, currentNode.l);
+		}
+		else if(currentNode.keyword.compareTo(keyword) < 0)
+		{
+			currentNode.r = delete(keyword, currentNode.r);
+		}
+		else
+		{
+			if(currentNode.l == null)
+			{
+				return currentNode.r;
+			}
+			else if(currentNode.r == null)
+			{
+				return currentNode.l;
+			}
+			
+			currentNode.keyword = minimumValue(currentNode.r);
+			
+			currentNode.r = delete(currentNode.keyword, currentNode.r);
+		}
+		
+		return currentNode;
+	}
+	
+	// Find minimum value in subtree
+	private String minimumValue(Node root)
+	{
+		String min = root.keyword;
+		
+		// Base case
+		if(root.l != null)
+		{
+			return minimumValue(root.l);
+		}
+		else
+			return min;
 	}
 
 	public void print()
@@ -178,10 +281,6 @@ class bst
 			}
 			
 			print(t.r);
-		}
-		else
-		{
-			//System.out.print("Node is null");
 		}
 	}
 }
