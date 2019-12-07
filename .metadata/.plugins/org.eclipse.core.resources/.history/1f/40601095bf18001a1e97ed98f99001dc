@@ -82,7 +82,7 @@ class bst
 
 	public void insert(String keyword, FileData fd)
 	{
-		Record recordToAdd = new Record(fd.id, fd.title, fd.author, null);
+		Record recordToAdd = new Record(fd.id, fd.author, fd.title, null);
 		// Write a recursive insertion that adds recordToAdd to the list of records
 		// for the node associated
 		// with keyword. If there is no node, this code should add the node.
